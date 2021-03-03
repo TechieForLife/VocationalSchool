@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define("HostSite", {
+	return sequelize.define("hostSite", {
 		url: {
 			type: DataTypes.STRING,
 			unique: true,
