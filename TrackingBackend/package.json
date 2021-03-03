@@ -1,0 +1,15 @@
+{
+  "name": "trackingbackend",
+  "version": "1.0.0",
+  "description": "API with db definitions for tracking student progress and defining courses.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dylan Mathews",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "sequelize": "^6.5.0"
+  }
+}
