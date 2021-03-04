@@ -1,4 +1,4 @@
-const {course} = require("../database/index.js")
+const {course} = require("../database/index.js").models
 
 module.exports = async function(name, options = {}) {
 	const course = await course.create({name})
