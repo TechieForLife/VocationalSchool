@@ -30,14 +30,27 @@ class GoogleClassroomIntegration {
 
 	async build() {
 		await this._getCredentials()
+		this.endpoint = await google.classroom({version: "v1", auth: this.oAuth2Client})
 	}
 
 	async getCourses() {
-		//TODO: Implement
+		const res = await this.endpoint.courses.list({pageSize: 10})
+		const {courses} = res.data
+
+		return courses
 	}
 
-	async addCourse(courseName) {
-		//TODO: Implement
+	async addCourse(courseName, description) {
+		const course = await this.endpoint
+				.courses
+				.create({
+					// body: {
+						name: courseName,
+						description,
+						ownerId: "me",
+					// }
+				})
+				.catch(e => console.error(e))
 	}
 
 	async getCourseByName(name) {
@@ -53,7 +66,7 @@ class GoogleClassroomIntegration {
 		const content = await readFile(path).catch(err => console.error("Could not find credentials.json. Make sure it has been downloaded and try again."))
 
 		if (content.length > 0) {
-			this._authorize(JSON.parse(content))
+			await this._authorize(JSON.parse(content))
 		}
 	}
 
@@ -102,9 +115,9 @@ class GoogleClassroomIntegration {
 				if (err) {
 					return console.error(`Error retrieving access token: ${err}`)
 				} else {
-					await writeFile(this.tokenPath, token)
+					await writeFile(this.tokenPath, JSON.stringify(token))
 					// Use new token to authorize. This avoids a second pass on this flow.
-					this.oAuth2Client.setCredentials(JSON.parse(token))
+					this.oAuth2Client.setCredentials(token)
 				}
 			})
 		})
@@ -113,6 +126,6 @@ class GoogleClassroomIntegration {
 
 
 // Test Code
-// const googleTest = new GoogleClassroomIntegration()
+const googleAPI = new GoogleClassroomIntegration()
 
-// googleTest.build()
+module.exports = googleAPI
