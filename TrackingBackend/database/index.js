@@ -6,7 +6,7 @@ var path = require('path');
 var appDir = path.dirname(require.main.filename);
 
 // Database Connection Setup
-logger.verbose("Setting up database.")
+// logger.verbose("Setting up database.")
 const sequelize = new Sequelize({
 	dialect: 'sqlite',
 	storage: `${appDir}/database/db.sqlite`,
@@ -15,7 +15,7 @@ const sequelize = new Sequelize({
 
 
 //Import models from folder.
-logger.verbose("Importing models.")
+// logger.verbose("Importing models.")
 const modelFilenames = ["Assignment", "Course", "Credentials", "HostSite", "Student", "Submission"]
 const modelDefiners = 
 	modelFilenames
@@ -23,12 +23,12 @@ const modelDefiners =
 
 
 // Initialize Models
-logger.verbose("Initializing models.")
+// logger.verbose("Initializing models.")
 modelDefiners.forEach(definer => definer(sequelize, DataTypes))
 
 
 // Apply Associations
-logger.verbose("Applying associations.")
+// logger.verbose("Applying associations.")
 applyAssociations(sequelize)
 
 sequelize.sync({force: true})
