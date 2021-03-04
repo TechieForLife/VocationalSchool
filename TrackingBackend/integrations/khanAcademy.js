@@ -94,6 +94,26 @@ class KhanAcademyScraper {
 			return assignments
 		}
 	}
+
+	async getStudents() {
+		//TODO: Implement
+	}
+
+	async getCompletedAssignmentsForStudents() {
+		//TODO: Implement
+	}
+
+	async getAllCompletedAssignments() {
+		//TODO: Implement
+	}
+
+	async addNewStudent(student) {
+		//TODO: Implement
+	}
+
+	async removeStudent(student) {
+		//TODO: Implement
+	}
 }
 
 const kaScraper = new KhanAcademyScraper()
