@@ -2,11 +2,15 @@ const {Sequelize, DataTypes} = require('sequelize')
 const {applyAssociations} = require('./extra-setup')
 const logger = require('../utils/logger.js')
 
+var path = require('path');
+var appDir = path.dirname(require.main.filename);
+
 // Database Connection Setup
 logger.verbose("Setting up database.")
 const sequelize = new Sequelize({
 	dialect: 'sqlite',
-	storage: 'db.sqlite',
+	storage: `${appDir}/database/db.sqlite`,
+	logging: false
 })
 
 
@@ -27,4 +31,5 @@ modelDefiners.forEach(definer => definer(sequelize, DataTypes))
 logger.verbose("Applying associations.")
 applyAssociations(sequelize)
 
-module.exports = sequelize.models
+sequelize.sync({force: true})
+module.exports = sequelize
