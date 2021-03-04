@@ -39,13 +39,15 @@ class KhanAcademyScraper {
 		}
 	}
 
-	async getAssignmentsByCourseName(courseName) {
+	async getAssignmentsByCourseName(courseName, options={}) {
 		const assignments = []
+		const category = options.category ? options.category : "computing"
+
 		await this.build()
 
 		try {
 			// Find the url of the course.
-			const url = await this._getCourseURLByName(courseName)
+			const url = await this._getCourseURLByName(courseName, category)
 
 			await this.driver.get(url)
 
