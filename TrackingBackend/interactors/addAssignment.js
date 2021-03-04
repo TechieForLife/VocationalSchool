@@ -1,10 +1,10 @@
 const {assignment, hostSite, course} = require("../database/index.js")
 
-module.exports = async function (name, course, hostSite) {
+module.exports = async function (name, specificCourse, specificHostSite) {
 	return await assignment.create({
 		name,
-		course,
-		hostSite
+		specificCourse,
+		specificHostSite
 	}, {
 		include: [{
 			association: course,
