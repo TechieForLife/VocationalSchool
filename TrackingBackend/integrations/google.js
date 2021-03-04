@@ -8,7 +8,16 @@ const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
 
 
-const SCOPES = ['https://www.googleapis.com/auth/classroom.courses.readonly'];
+const SCOPES = [
+	// Manage your Google Classroom classes
+	'https://www.googleapis.com/auth/classroom.courses', 				
+	// See, edit, and create classwork materials in Google Classroom
+	'https://www.googleapis.com/auth/classroom.courseworkmaterials',
+	// Manage course work and grades for students in the Google Classroom classes you teach and view the course work and grades for classes you administer  
+	'https://www.googleapis.com/auth/classroom.coursework.students',
+	// https://www.googleapis.com/auth/classroom.student-submissions.students.readonly
+	'https://www.googleapis.com/auth/classroom.student-submissions.students.readonly'
+];
 
 class GoogleClassroomIntegration {
 	constructor() {
