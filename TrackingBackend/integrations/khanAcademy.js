@@ -98,11 +98,4 @@ class KhanAcademyScraper {
 
 const kaScraper = new KhanAcademyScraper()
 
-const test = async () => {
-	kaScraper.build()
-
-	kaScraper.getAssignmentsByCourseName("Intro to HTML/CSS: Making webpages")
-}
-
-test()
 module.exports = kaScraper
