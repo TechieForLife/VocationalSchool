@@ -1,14 +1,22 @@
 const {Builder, By, Key} = require('selenium-webdriver')
+const firefox = require('selenium-webdriver/firefox');
 
 // This is a wrapper for a selenium scraper that can grab course assignments and student progress.
 class KhanAcademyScraper {
 	constructor() {
 		this.baseUrl = "https://www.khanacademy.org"
 		this.driver = false
+		this.screen = {
+			width: 1920,
+			height: 1080
+		}
 	}
 
 	async build() {
-		this.driver = await new Builder().forBrowser("firefox").build()
+		this.driver = await new Builder()
+			.forBrowser("firefox")
+			.setFirefoxOptions(new firefox.Options().headless().windowSize(this.screen))
+			.build()
 	}
 
 	async _getCourseURLByName(courseName, category="computing") {
@@ -90,4 +98,11 @@ class KhanAcademyScraper {
 
 const kaScraper = new KhanAcademyScraper()
 
+const test = async () => {
+	kaScraper.build()
+
+	kaScraper.getAssignmentsByCourseName("Intro to HTML/CSS: Making webpages")
+}
+
+test()
 module.exports = kaScraper
