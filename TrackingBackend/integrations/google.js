@@ -54,12 +54,27 @@ class GoogleClassroomIntegration {
 	}
 
 	async getCourseByName(name) {
-		//TODO: Implement
+		const courses = await this.getCourses()
+		const possibleCourse = courses.filter(course => course.name == name)
+
+		if (possibleCourse.length > 0) {
+			return possibleCourse[0]
+		} else {
+			return {}
+		}
 	}
 
 	async addAssignmentToCourse(assignment, courseName) {
 		//TODO: Implement
-	} 
+	}
+
+	async getAssignmentsFromCourse(courseName) {
+		//TODO: Implement
+	}
+
+	async deleteAssignmentFromCourse(assignment, courseName) {
+		//TODO: Implement
+	}
 
 	// Authorization flow helpers
 	async _getCredentials(path="./credentials.json") {
