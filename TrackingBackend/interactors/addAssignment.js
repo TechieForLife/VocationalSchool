@@ -1,4 +1,4 @@
-const {assignment, hostSite, course} = require("../database/index.js")
+const {assignment, hostSite, course} = require("../database/index.js").models
 
 module.exports = async function (name, specificCourse, specificHostSite) {
 	return await assignment.create({
