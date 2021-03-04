@@ -6,12 +6,6 @@ module.exports = async function (name, specificCourse, specificHostSite) {
 		specificCourse,
 		specificHostSite
 	}, {
-		include: [{
-			association: course,
-			as: "course"
-		}, {
-			association: hostSite,
-			as: "hostSite"
-		}]
+		include: [course, hostSite]
 	})
 }
