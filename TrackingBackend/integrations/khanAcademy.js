@@ -40,6 +40,7 @@ class KhanAcademyScraper {
 	}
 
 	async getAssignmentsByCourseName(courseName) {
+		const assignments = []
 		await this.build()
 
 		try {
@@ -50,7 +51,6 @@ class KhanAcademyScraper {
 
 			// Grab all the anchors on the page.
 			const anchors = await this.driver.findElements(By.tagName('a'))
-			const assignments = []
 
 			for (var idx in anchors) {
 				// Only care about anchors that link to an assignment. Heuristic: Link is prefixed by the course URL.
@@ -79,9 +79,9 @@ class KhanAcademyScraper {
 				}
 			}
 
-			console.log(assignments)
 		} finally {
 			this.driver.quit()
+			return assignments
 		}
 	}
 }
