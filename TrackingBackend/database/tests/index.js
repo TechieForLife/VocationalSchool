@@ -7,7 +7,7 @@ const sequelize = new Sequelize("sqlite::memory", {logging: false})
 
 
 //Import models from folder.
-const modelFilenames = ["Assignment", "Course", "Credentials", "HostSite", "Student", "Submission"]
+const modelFilenames = ["assignment", "course", "credentials", "hostSite", "student", "submission"]
 const modelDefiners = 
 	modelFilenames
 		.map(filename => require(`../models/${filename}`))

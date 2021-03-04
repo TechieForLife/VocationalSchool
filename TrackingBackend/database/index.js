@@ -16,7 +16,7 @@ const sequelize = new Sequelize({
 
 //Import models from folder.
 // logger.verbose("Importing models.")
-const modelFilenames = ["Assignment", "Course", "Credentials", "HostSite", "Student", "Submission"]
+const modelFilenames = ["assignment", "course", "credentials", "hostSite", "student", "submission"]
 const modelDefiners = 
 	modelFilenames
 		.map(filename => require(`./models/${filename}`))
@@ -32,4 +32,5 @@ modelDefiners.forEach(definer => definer(sequelize, DataTypes))
 applyAssociations(sequelize)
 
 sequelize.sync({force: true})
+
 module.exports = sequelize

@@ -7,10 +7,14 @@ const applyAssociations = sequelize => {
 	hostSite.hasMany(hostSite)
 
 	submission.hasOne(student)
+	// student.hasMany(submission)
 	submission.hasOne(assignment)
+	// assignment.hasMany(submission)
 
 	credentials.hasOne(hostSite)
+	// hostSite.hasMany(credentials)
 	credentials.hasOne(student)
+	// student.hasMany(student)
 }
 
 module.exports = {applyAssociations}
