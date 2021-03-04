@@ -1,8 +1,10 @@
 const applyAssociations = sequelize => {
 	const {student, course, hostSite, credentials, submission, assignment} = sequelize.models
 
-	assignment.hasOne(course)
-	assignment.hasOne(hostSite)
+	assignment.belongsTo(course)
+	course.hasMany(assignment)
+	assignment.belongsTo(hostSite)
+	hostSite.hasMany(hostSite)
 
 	submission.hasOne(student)
 	submission.hasOne(assignment)

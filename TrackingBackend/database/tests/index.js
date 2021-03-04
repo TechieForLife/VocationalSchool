@@ -4,7 +4,7 @@ const logger = require('../../utils/logger.js')
 
 // Database Connection Setup
 logger.verbose("Setting up database.")
-const sequelize = new Sequelize("sqlite::memory")
+const sequelize = new Sequelize("sqlite::memory", {logging: false})
 
 
 //Import models from folder.
@@ -24,4 +24,5 @@ modelDefiners.forEach(definer => definer(sequelize, DataTypes))
 logger.verbose("Applying associations.")
 applyAssociations(sequelize)
 
+// sequelize.sync({force: true})
 module.exports = sequelize
