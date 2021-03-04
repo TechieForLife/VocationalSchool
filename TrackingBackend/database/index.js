@@ -10,22 +10,21 @@ const sequelize = new Sequelize({
 })
 
 
-// Import models from folder
+//Import models from folder.
 logger.verbose("Importing models.")
 const modelFilenames = ["Assignment", "Course", "Credentials", "HostSite", "Student", "Submission"]
-
 const modelDefiners = 
 	modelFilenames
 		.map(filename => require(`./models/${filename}`))
 
-// Initialize models with sequelize copy from above
+
+// Initialize Models
 logger.verbose("Initializing models.")
 modelDefiners.forEach(definer => definer(sequelize, DataTypes))
 
-// Apply associations between models
+
+// Apply Associations
 logger.verbose("Applying associations.")
 applyAssociations(sequelize)
 
-console.log(sequelize.models)
-
-module.exports = sequelize
+module.exports = sequelize.models
