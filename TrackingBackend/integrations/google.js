@@ -10,11 +10,14 @@ const writeFile = util.promisify(fs.writeFile)
 
 const SCOPES = [
 	// Manage your Google Classroom classes
-	'https://www.googleapis.com/auth/classroom.courses', 				
+	'https://www.googleapis.com/auth/classroom.courses', 	
+
 	// See, edit, and create classwork materials in Google Classroom
 	'https://www.googleapis.com/auth/classroom.courseworkmaterials',
+
 	// Manage course work and grades for students in the Google Classroom classes you teach and view the course work and grades for classes you administer  
 	'https://www.googleapis.com/auth/classroom.coursework.students',
+
 	// https://www.googleapis.com/auth/classroom.student-submissions.students.readonly
 	'https://www.googleapis.com/auth/classroom.student-submissions.students.readonly'
 ];
@@ -55,33 +58,34 @@ class GoogleClassroomIntegration {
 	}
 
 	async _authorize(credentials) {
-		console.log("Authorizing")
 		const {client_secret, client_id, redirect_uris} = credentials.installed
 
+		// Create a client for OAuth2
 		this.oAuth2Client = new google.auth.OAuth2(
 			client_id, client_secret, redirect_uris[0]
 		)
 
-		// check for previously saved token
+		// Check for stored token.
 		const token = await readFile(this.tokenPath).catch(err => false)
 
 		if (!token) {
+			// If the token doesn't exist, create a new one.
 			await this._getNewToken()
 		} else {
-			console.log("Using previous token.")
-			console.log(token)
+			// Otherwise, use the token to set credentials.
 			this.oAuth2Client.setCredentials(JSON.parse(token))
 		}
 
 	}
 
 	async _getNewToken() {
-		console.log("Getting new token.")
+		// Generate a URL the user can use to authorize scopes.
 		const authUrl = this.oAuth2Client.generateAuthUrl({
 			access_type: 'offline',
 			scope: this.scopes
 		})
 
+		// Prompt user to visit url and authorize scopes and generate an auth. code.
 		console.log("Authorize this app by visiting this url:", authUrl)
 
 		const rl = readline.createInterface({
@@ -89,21 +93,26 @@ class GoogleClassroomIntegration {
 			output: process.stdout
 		})
 
+		// Wait for user to complete flow and grab the auth. code.
 		rl.question("Enter the code from that page here: ", (code) => {
 			rl.close()
 
+			// Generate a token for future use.
 			this.oAuth2Client.getToken(code, async (err, token) => {
 				if (err) {
 					return console.error(`Error retrieving access token: ${err}`)
 				} else {
 					await writeFile(this.tokenPath, token)
-					console.log(`Stored token at ${this.tokenPath}`)
+					// Use new token to authorize. This avoids a second pass on this flow.
+					this.oAuth2Client.setCredentials(JSON.parse(token))
 				}
 			})
 		})
 	}
 }
 
-const googleTest = new GoogleClassroomIntegration()
 
-googleTest.build()
+// Test Code
+// const googleTest = new GoogleClassroomIntegration()
+
+// googleTest.build()
