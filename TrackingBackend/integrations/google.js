@@ -44,11 +44,9 @@ class GoogleClassroomIntegration {
 		const course = await this.endpoint
 				.courses
 				.create({
-					// body: {
 						name: courseName,
 						description,
 						ownerId: "me",
-					// }
 				})
 				.catch(e => console.error(e))
 	}
@@ -73,6 +71,26 @@ class GoogleClassroomIntegration {
 	}
 
 	async deleteAssignmentFromCourse(assignment, courseName) {
+		//TODO: Implement
+	}
+
+	async addAssignmentsToCourse(assignmentList, courseName) {
+		await Promise.all(assignmentList.map(ass => addAssignmentToCourse(ass, courseName)))
+	}
+
+	async getStudents() {
+		//TODO: Implement
+	}
+
+	async getCompletedAssignmentsForStudent(student) {
+		//TODO: Implement
+	}
+
+	async markAssignmentAsCompleteForStudent(assignment, student) {
+		//TODO: Implement
+	}
+
+	async removeStudentFromCourse(student, course) {
 		//TODO: Implement
 	}
 
