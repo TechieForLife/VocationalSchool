@@ -86,14 +86,6 @@ class KhanAcademyScraper {
 	}
 }
 
+const kaScraper = new KhanAcademyScraper()
 
-const test = async () => {
-	console.log("Starting test.")
-	const kaScraper = new KhanAcademyScraper()
-	await kaScraper.getAssignmentsByCourseName("Intro to HTML/CSS: Making webpages")
-	console.log("Done testing.")
-}
-
-test()
-console.log("Outside of test.")
-// module.exports(kaScraper)
+module.exports = kaScraper
