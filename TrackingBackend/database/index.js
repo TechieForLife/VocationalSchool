@@ -6,7 +6,7 @@ const logger = require('../utils/logger.js')
 logger.verbose("Setting up database.")
 const sequelize = new Sequelize({
 	dialect: 'sqlite',
-	storage: 'sqlite-database/db.sqlite',
+	storage: 'db.sqlite',
 })
 
 
