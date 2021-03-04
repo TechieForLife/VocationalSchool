@@ -40,6 +40,8 @@ class KhanAcademyScraper {
 				}
 			}
 
+
+
 			throw new Error(`Course ${courseName} does not exist for category: ${category}`)
 		} catch (e) {
 			console.error("Could not grab course url.")
@@ -116,6 +118,4 @@ class KhanAcademyScraper {
 	}
 }
 
-const kaScraper = new KhanAcademyScraper()
-
-module.exports = kaScraper
+module.exports = KhanAcademyScraper

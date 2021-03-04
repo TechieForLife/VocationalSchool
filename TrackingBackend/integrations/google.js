@@ -7,7 +7,6 @@ const util = require('util')
 const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
 
-
 const SCOPES = [
 	// Manage your Google Classroom classes
 	'https://www.googleapis.com/auth/classroom.courses', 	
@@ -21,6 +20,7 @@ const SCOPES = [
 	// https://www.googleapis.com/auth/classroom.student-submissions.students.readonly
 	'https://www.googleapis.com/auth/classroom.student-submissions.students.readonly'
 ];
+
 
 class GoogleClassroomIntegration {
 	constructor() {
@@ -58,7 +58,7 @@ class GoogleClassroomIntegration {
 		if (possibleCourse.length > 0) {
 			return possibleCourse[0]
 		} else {
-			return {}
+			throw new Error("Course does not exist.")
 		}
 	}
 

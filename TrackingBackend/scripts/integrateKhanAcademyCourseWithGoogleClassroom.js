@@ -1,24 +1,38 @@
 // WEHW that name is a mouthful!
 // This script is non-functional. It describes our intended integrations.
-const khanAcademy = "../integrations/khanAcademy"
-const google = "../integrations/google"
+const KhanAcademyScraper = require("../integrations/khanAcademy")
+const google = require("../integrations/google")
 
-module.exports = async function(khanAcademyCourseName, khanAcademyCourseCategory, googleClassroomCourseName) {
-	await khanAcademy.build()
+const main = async () => {
+	if (process.argv.length < 4) {
+		console.log("Please specify the KhanAcademyCourseName and GoogleCourseName.")
+		return
+	}
+	const [node, path, khanAcademyCourseName, googleCourseName] = process.argv
+
+	const kaScraper = new KhanAcademyScraper()
+	await kaScraper.build()
 	await google.build()
 
 	// Grab assignments from khanAcademy
-	const assignments = await khanAcademy
-		.getAssignmentsByCourseName(khanAcademyClassName)
+	const assignments = await kaScraper
+		.getAssignmentsByCourseName(khanAcademyCourseName)
 		.catch(e => console.error(`Failed to fetch assignments: ${e}`))
 
-	if (!google.courseExists(googleClassroomCourseName)) {
-		await google
-			.createCourse(googleClassroomCourseName)
-			.catch(e => console.error(`Failed to create course ${googleClassroomCourseName} for Google Classroom`))
-	}
+	console.log(assignments)
 
-	await google
-		.addAssignmentsToCourse(assignments, googleClassroomCourseName)
-		.catch(e => console.error(`Failed to add assignments to google classroom.`))
+	// if (!google.courseExists(googleClassroomCourseName)) {
+	// 	await google
+	// 		.createCourse(googleClassroomCourseName)
+	// 		.catch(e => console.error(`Failed to create course ${googleClassroomCourseName} for Google Classroom`))
+	// }
+
+	// await google
+	// 	.addAssignmentsToCourse(assignments, googleClassroomCourseName)
+	// 	.catch(e => console.error(`Failed to add assignments to google classroom.`))
 }
+
+main()
+// module.exports = async function(khanAcademyCourseName, khanAcademyCourseCategory, googleClassroomCourseName) {
+	
+//
